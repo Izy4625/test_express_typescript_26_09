@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.create = exports.findOne = exports.findAll = void 0;
+exports.update = exports.create = exports.findOne = exports.findAll = void 0;
 const fs_1 = __importDefault(require("fs"));
-const bepperEnums_1 = require("../Enums/bepperEnums");
+// import {Status} from "../Enums/bepperEnums"
 let beepers = loadUsers();
 console.log(beepers);
 console.log(beepers["950"]);
@@ -48,7 +48,7 @@ const create = (beeperName) => __awaiter(void 0, void 0, void 0, function* () {
         id: id,
         name: beeperName,
         created_at: date,
-        status: bepperEnums_1.Status.assembled
+        status: "assembled"
     };
     console.log(beeper);
     const idkey = id.toString();
@@ -73,23 +73,21 @@ exports.create = create;
 //     }
 //     return user
 // }
-// export const update = async (id : string, updateValues : User) : Promise<UnitUser | null> => {
-//     const userExists = await findOne(id)
-//     if (!userExists) {
-//         return null
-//     }
-//     if(updateValues.password) {
-//         const salt = await bcrypt.genSalt(10)
-//         const newPass = await bcrypt.hash(updateValues.password, salt)
-//         updateValues.password = newPass
-//     }
-//     users[id] = {
-//         ...userExists,
-//         ...updateValues
-//     }
-//     saveUsers()
-//     return users[id]
-// }
+const update = (id, status) => __awaiter(void 0, void 0, void 0, function* () {
+    const beeperExists = yield (0, exports.findOne)(id);
+    console.log(beeperExists);
+    if (!beeperExists) {
+        return null;
+    }
+    if (status) {
+        beeperExists.status = status;
+    }
+    beepers[id] = beeperExists;
+    console.log(beepers[id]);
+    saveUsers();
+    return beepers[id];
+});
+exports.update = update;
 // export const remove = async (id : string) : Promise<null | void> => {
 //     const user = await findOne(id)
 //     if (!user) {

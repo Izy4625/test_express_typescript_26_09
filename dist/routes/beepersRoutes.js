@@ -32,4 +32,5 @@ const beeperRouter = express_1.default.Router();
 beeperRouter.post("/beepers", controller.createBeeper);
 beeperRouter.get("/beepers", controller.getAll);
 beeperRouter.get("/beepers/:id", controller.getByID);
+beeperRouter.put("/beepers/:id/Status", controller.updateStatus);
 exports.default = beeperRouter;

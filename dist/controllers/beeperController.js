@@ -32,9 +32,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getByID = exports.getAll = exports.createBeeper = void 0;
+exports.updateStatus = exports.getByID = exports.getAll = exports.createBeeper = void 0;
 const crud = __importStar(require("../dal/dal"));
 const http_status_codes_1 = require("http-status-codes");
+// import { Status } from "../Enums/bepperEnums";
 const createBeeper = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.body;
@@ -64,7 +65,7 @@ const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.getAll = getAll;
 const getByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let keyId = req.params.id.toString();
+        const keyId = req.params.id.toString();
         console.log(typeof keyId);
         const beeper = yield crud.findOne(keyId);
         console.log(beeper);
@@ -75,3 +76,21 @@ const getByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getByID = getByID;
+const updateStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params['id'];
+    const data = req.body;
+    const keyId = id.toString();
+    const newId = keyId.substring(1);
+    console.log(keyId);
+    console.log(newId);
+    console.log(data['status']);
+    const status = data['status'];
+    const beeper = yield crud.update(newId, status);
+    if (beeper) {
+        res.status(http_status_codes_1.StatusCodes.OK).json(beeper);
+    }
+    else {
+        res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json("couldnt update the status");
+    }
+});
+exports.updateStatus = updateStatus;

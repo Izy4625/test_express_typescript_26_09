@@ -1,6 +1,6 @@
-import { Beeper, Beepers } from "../models/beepers"
+import { Beeper, Beepers ,status} from "../models/beepers"
 import fs from "fs";
-import {Status} from "../Enums/bepperEnums"
+// import {Status} from "../Enums/bepperEnums"
 
 
 
@@ -43,7 +43,7 @@ export const create = async (beeperName: string): Promise<Beeper | null> => {
     id : id,
    name: beeperName,
    created_at: date,
-   status: Status.assembled
+   status: "assembled"
     
   };
   console.log(beeper);
@@ -81,30 +81,25 @@ export const create = async (beeperName: string): Promise<Beeper | null> => {
 //     return user
 // }
 
-// export const update = async (id : string, updateValues : User) : Promise<UnitUser | null> => {
+export const update = async (id : string, status: status) : Promise<Beeper | null> => {
 
-//     const userExists = await findOne(id)
+    const beeperExists = await findOne(id)
+    console.log(beeperExists);
 
-//     if (!userExists) {
-//         return null
-//     }
+    if (!beeperExists) {
+        return null
+    }
+    if(status){
+        beeperExists.status = status
+    }
 
-//     if(updateValues.password) {
-//         const salt = await bcrypt.genSalt(10)
-//         const newPass = await bcrypt.hash(updateValues.password, salt)
 
-//         updateValues.password = newPass
-//     }
+    beepers[id] = beeperExists
+    console.log(beepers[id]);
+    saveUsers()
 
-//     users[id] = {
-//         ...userExists,
-//         ...updateValues
-//     }
-
-//     saveUsers()
-
-//     return users[id]
-// }
+    return beepers[id]
+}
 
 // export const remove = async (id : string) : Promise<null | void> => {
 
