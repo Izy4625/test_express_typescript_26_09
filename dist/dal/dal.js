@@ -16,6 +16,7 @@ exports.create = exports.findOne = exports.findAll = void 0;
 const fs_1 = __importDefault(require("fs"));
 const bepperEnums_1 = require("../Enums/bepperEnums");
 let beepers = loadUsers();
+console.log(beepers);
 function loadUsers() {
     try {
         const data = fs_1.default.readFileSync("./db.json", "utf-8");
@@ -48,6 +49,7 @@ const create = (beeperName) => __awaiter(void 0, void 0, void 0, function* () {
         created_at: date,
         status: bepperEnums_1.Status.assembled
     };
+    console.log(beeper);
     const idkey = id.toString();
     beepers[idkey] = beeper;
     saveUsers();

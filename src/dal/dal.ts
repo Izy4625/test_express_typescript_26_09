@@ -6,6 +6,7 @@ import {Status} from "../Enums/bepperEnums"
 
 
 let beepers: Beepers = loadUsers() 
+console.log(beepers);
 
 function loadUsers () : Beepers {
   try {
@@ -44,6 +45,7 @@ export const create = async (beeperName: string): Promise<Beeper | null> => {
    status: Status.assembled
     
   };
+  console.log(beeper);
   const idkey: string = id.toString()
   beepers[idkey] = beeper;
 

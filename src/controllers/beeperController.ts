@@ -5,30 +5,32 @@ import { Beeper } from "../models/beepers";
 
 
 
-export  async function createBeeper(req: Request, res: Response): Promise<Beeper | any>{
+export const createBeeper = async (req: Request, res: Response)=>{
     try{
         const {name} = req.body
+        console.log(name);
         if(!name){
            res.status(StatusCodes.BAD_REQUEST).json({error: "plese provide a name..."});
-           return 
-            
+                   
         }
     
    
     const beeper  = await crud.create(name)
+    console.log(beeper);
 
     if(beeper){
          res.status(StatusCodes.CREATED).json({beeper});
-         return beeper
+       
     }
   }
   catch(error){
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error})
   }
 }
-export async function getAll(): Promise<Beeper[]| any>{
-   const allBeepers: Beeper[]  = await crud.findAll()
-   return allBeepers
+export const  getAll = async (req: Request, res: Response)=>{
+   const allBeepers: Beeper[] = await crud.findAll()
+   console.log(allBeepers);
+   res.status(StatusCodes.OK).json(allBeepers);
 
 }
           
