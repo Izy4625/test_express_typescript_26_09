@@ -4,6 +4,7 @@ import {Status} from "../Enums/bepperEnums"
 
 
 
+
 let beepers: Beepers = loadUsers() 
 
 function loadUsers () : Beepers {
@@ -18,7 +19,7 @@ function loadUsers () : Beepers {
 
 function saveUsers () {
   try {
-    fs.writeFileSync("./users.json", JSON.stringify(beepers), "utf-8")
+    fs.writeFileSync("./db.json", JSON.stringify(beepers), "utf-8")
     console.log(`User saved successfully!`)
   } catch (error) {
     console.log(`Error : ${error}`)
@@ -43,8 +44,8 @@ export const create = async (beeperName: string): Promise<Beeper | null> => {
    status: Status.assembled
     
   };
-
-  beepers[id] = beeper;
+  const idkey: string = id.toString()
+  beepers[idkey] = beeper;
 
   saveUsers()
 

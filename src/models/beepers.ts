@@ -9,5 +9,5 @@ export interface Beeper {
 }
 
 export interface Beepers {
-    [key: number] : Beeper
+    [key: string] : Beeper
 }

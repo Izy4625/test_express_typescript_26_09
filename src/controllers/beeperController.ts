@@ -1,14 +1,16 @@
 import * as crud from "../dal/dal"
 import { Request,Response } from "express"
 import {StatusCodes} from "http-status-codes"
+import { Beeper } from "../models/beepers";
 
 
 
-export  async function createBeeper(req: Request, res: Response){
+export  async function createBeeper(req: Request, res: Response): Promise<Beeper | any>{
     try{
         const {name} = req.body
         if(!name){
-            return res.status(StatusCodes.BAD_REQUEST).json({error: "plese provide a name..."});
+           res.status(StatusCodes.BAD_REQUEST).json({error: "plese provide a name..."});
+           return 
             
         }
     
@@ -16,11 +18,17 @@ export  async function createBeeper(req: Request, res: Response){
     const beeper  = await crud.create(name)
 
     if(beeper){
-        return res.status(StatusCodes.CREATED).json({beeper});
+         res.status(StatusCodes.CREATED).json({beeper});
+         return beeper
     }
   }
   catch(error){
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error})
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error})
   }
+}
+export async function getAll(): Promise<Beeper[]| any>{
+   const allBeepers: Beeper[]  = await crud.findAll()
+   return allBeepers
+
 }
           
