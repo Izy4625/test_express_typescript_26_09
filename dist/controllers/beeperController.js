@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateStatus = exports.getByID = exports.getAll = exports.createBeeper = void 0;
+exports.filteredBeepers = exports.deleteBeeper = exports.updateStatus = exports.getByID = exports.getAll = exports.createBeeper = void 0;
 const crud = __importStar(require("../dal/dal"));
 const http_status_codes_1 = require("http-status-codes");
 // import { Status } from "../Enums/bepperEnums";
@@ -101,3 +101,41 @@ const updateStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.updateStatus = updateStatus;
+const deleteBeeper = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params['id'];
+    const keyId = id.toString();
+    const newId = keyId.substring(1);
+    try {
+        yield crud.remove(newId);
+        const beeper = yield crud.findOne(newId);
+        if (!beeper) {
+            res.status(http_status_codes_1.StatusCodes.OK).json("succesfully deleted");
+        }
+        else {
+            res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json("couldnt delete this beeper");
+        }
+    }
+    catch (error) {
+        res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
+    }
+});
+exports.deleteBeeper = deleteBeeper;
+const filteredBeepers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const status = req.params['status'];
+        const newstatus = status.substring(1);
+        console.log(newstatus);
+        if (status) {
+            const allBeepers = yield crud.findAll();
+            const filtered = allBeepers.filter(obj => obj.status === newstatus);
+            console.log(filtered);
+            if (filtered) {
+                res.status(http_status_codes_1.StatusCodes.OK).json(filtered);
+            }
+        }
+    }
+    catch (error) {
+        res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
+    }
+});
+exports.filteredBeepers = filteredBeepers;

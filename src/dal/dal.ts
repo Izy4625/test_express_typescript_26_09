@@ -1,11 +1,10 @@
 import { Beeper, Beepers ,status} from "../models/beepers"
 import fs from "fs";
-// import {Status} from "../Enums/bepperEnums"
-
-
 
 
 let beepers: Beepers = loadUsers() 
+
+
 console.log(beepers)
 console.log(beepers["950"])
 
@@ -30,7 +29,9 @@ function saveUsers () {
 
 export const findAll = async (): Promise<Beeper[]> => Object.values(beepers);
 
+
 export const findOne = async (id: string): Promise<Beeper> => beepers[id];
+
 
 export const create = async (beeperName: string): Promise<Beeper | null> => {
 
@@ -43,7 +44,7 @@ export const create = async (beeperName: string): Promise<Beeper | null> => {
     id : id,
    name: beeperName,
    created_at: date,
-   status: "assembled"
+   status: "manufactured"
     
   };
   console.log(beeper);
@@ -55,31 +56,6 @@ export const create = async (beeperName: string): Promise<Beeper | null> => {
   return beeper;
 };
 
-// export const findByEmail = async (user_email: string): Promise<null | UnitUser> => {
-
-//   const allUsers = await findAll();
-
-//   const getUser = allUsers.find(result => user_email === result.email);
-
-//   if (!getUser) {
-//     return null;
-//   }
-
-//   return getUser;
-// };
-
-// export const comparePassword  = async (email : string, supplied_password : string) : Promise<null | UnitUser> => {
-
-//     const user = await findByEmail(email)
-
-//     const decryptPassword = await bcrypt.compare(supplied_password, user!.password)
-
-//     if (!decryptPassword) {
-//         return null
-//     }
-
-//     return user
-// }
 
 export const update = async (id : string, upddatedBeeper: Beeper) : Promise<Beeper | null> => {
 
@@ -94,43 +70,27 @@ export const update = async (id : string, upddatedBeeper: Beeper) : Promise<Beep
         beepers[id] = {
             ...beeperExists,
             ...upddatedBeeper}
-    }
-
-
-   
+    } 
     console.log(beepers[id]);
     saveUsers()
 
     return beepers[id]
 }
 
-// export const remove = async (id : string) : Promise<null | void> => {
+export const remove = async (id : string) : Promise<null | void> => {
 
-//     const user = await findOne(id)
+    const beeper = await findOne(id)
 
-//     if (!user) {
-//         return null
-//     }
+    if (!beeper) {
+        return null
+    }
 
-//     delete users[id]
+    delete beepers[id]
 
-//     saveUsers()
-// }
-// export const addBook = async (id:string,book: UnitBook):Promise<UnitUser | null> =>{
-//     const user =  await findOne(id);
-//     console.log(id);
-//     console.log(book);
-//     if(!user){
-//         return user
-//     }
-//     console.log(user)
+    saveUsers()
+}
+function ifdeployed(){
     
-//     user.bookList.push(book);
-//     console.log(user);
-//     users[id] = user
-       
-//     console.log(users[id])
-//     saveUsers()
-//     return users[id];
-// }
+}
+
 

@@ -75,4 +75,43 @@ export const updateStatus = async (req: Request, res: Response) =>{
         res.status(StatusCodes.BAD_REQUEST).json("couldnt update the status")
     }
 }
-          
+
+export const deleteBeeper = async (req: Request, res: Response) =>{
+    const id = req.params['id']
+
+    const keyId = id.toString();
+    const newId = keyId.substring(1)
+    try{
+       await crud.remove(newId);
+       const beeper = await crud.findOne(newId);
+       if(!beeper){
+        res.status(StatusCodes.OK).json("succesfully deleted");
+       }
+       else{
+        res.status(StatusCodes.BAD_REQUEST).json("couldnt delete this beeper")
+       }
+        
+    }
+    catch(error){
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error})
+    }
+}
+ export const filteredBeepers = async (req: Request, res: Response) =>{
+    try{
+        const status = req.params['status']
+        const newstatus = status.substring(1);
+        console.log(newstatus);
+        if(status){
+        const allBeepers: Beeper[] = await crud.findAll()
+        const filtered = allBeepers.filter(obj => obj.status === newstatus)
+        console.log(filtered);
+
+        if(filtered){
+            res.status(StatusCodes.OK).json(filtered);
+        }
+    }
+
+        }catch(error){
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({error})
+        }
+ }

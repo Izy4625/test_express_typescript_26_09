@@ -12,9 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.update = exports.create = exports.findOne = exports.findAll = void 0;
+exports.remove = exports.update = exports.create = exports.findOne = exports.findAll = void 0;
 const fs_1 = __importDefault(require("fs"));
-// import {Status} from "../Enums/bepperEnums"
 let beepers = loadUsers();
 console.log(beepers);
 console.log(beepers["950"]);
@@ -57,22 +56,6 @@ const create = (beeperName) => __awaiter(void 0, void 0, void 0, function* () {
     return beeper;
 });
 exports.create = create;
-// export const findByEmail = async (user_email: string): Promise<null | UnitUser> => {
-//   const allUsers = await findAll();
-//   const getUser = allUsers.find(result => user_email === result.email);
-//   if (!getUser) {
-//     return null;
-//   }
-//   return getUser;
-// };
-// export const comparePassword  = async (email : string, supplied_password : string) : Promise<null | UnitUser> => {
-//     const user = await findByEmail(email)
-//     const decryptPassword = await bcrypt.compare(supplied_password, user!.password)
-//     if (!decryptPassword) {
-//         return null
-//     }
-//     return user
-// }
 const update = (id, upddatedBeeper) => __awaiter(void 0, void 0, void 0, function* () {
     const beeperExists = yield (0, exports.findOne)(id);
     console.log(beeperExists);
@@ -88,26 +71,12 @@ const update = (id, upddatedBeeper) => __awaiter(void 0, void 0, void 0, functio
     return beepers[id];
 });
 exports.update = update;
-// export const remove = async (id : string) : Promise<null | void> => {
-//     const user = await findOne(id)
-//     if (!user) {
-//         return null
-//     }
-//     delete users[id]
-//     saveUsers()
-// }
-// export const addBook = async (id:string,book: UnitBook):Promise<UnitUser | null> =>{
-//     const user =  await findOne(id);
-//     console.log(id);
-//     console.log(book);
-//     if(!user){
-//         return user
-//     }
-//     console.log(user)
-//     user.bookList.push(book);
-//     console.log(user);
-//     users[id] = user
-//     console.log(users[id])
-//     saveUsers()
-//     return users[id];
-// }
+const remove = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const beeper = yield (0, exports.findOne)(id);
+    if (!beeper) {
+        return null;
+    }
+    delete beepers[id];
+    saveUsers();
+});
+exports.remove = remove;
