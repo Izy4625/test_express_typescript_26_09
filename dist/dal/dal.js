@@ -47,7 +47,7 @@ const create = (beeperName) => __awaiter(void 0, void 0, void 0, function* () {
         id: id,
         name: beeperName,
         created_at: date,
-        status: "assembled"
+        status: "manufactured"
     };
     console.log(beeper);
     const idkey = id.toString();
@@ -66,6 +66,9 @@ const update = (id, upddatedBeeper) => __awaiter(void 0, void 0, void 0, functio
     if (upddatedBeeper) {
         beepers[id] = Object.assign(Object.assign({}, beeperExists), upddatedBeeper);
     }
+    if (upddatedBeeper.status === "deployed") {
+        ifdeployed(id, upddatedBeeper);
+    }
     console.log(beepers[id]);
     saveUsers();
     return beepers[id];
@@ -80,3 +83,8 @@ const remove = (id) => __awaiter(void 0, void 0, void 0, function* () {
     saveUsers();
 });
 exports.remove = remove;
+function ifdeployed(id, upddatedBeeper) {
+    upddatedBeeper.status = "detonated";
+    (0, exports.update)(id, upddatedBeeper);
+    setTimeout(exports.update, 10000);
+}

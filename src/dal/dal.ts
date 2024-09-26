@@ -70,7 +70,11 @@ export const update = async (id : string, upddatedBeeper: Beeper) : Promise<Beep
         beepers[id] = {
             ...beeperExists,
             ...upddatedBeeper}
-    } 
+    }
+    if(upddatedBeeper.status === "deployed"){
+        
+        ifdeployed(id,upddatedBeeper);
+    }
     console.log(beepers[id]);
     saveUsers()
 
@@ -89,7 +93,14 @@ export const remove = async (id : string) : Promise<null | void> => {
 
     saveUsers()
 }
-function ifdeployed(){
+
+
+function ifdeployed(id: string, upddatedBeeper: Beeper){
+    
+    upddatedBeeper.status = "detonated";
+    update(id,upddatedBeeper);
+    setTimeout(update, 10000)
+
     
 }
 
