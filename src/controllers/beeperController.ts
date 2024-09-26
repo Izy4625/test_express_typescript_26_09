@@ -59,10 +59,15 @@ export const updateStatus = async (req: Request, res: Response) =>{
     console.log(newId);
     console.log(data['status']);
     const status = data['status'];
-    
-   
-    
-    const beeper = await crud.update(newId, status);
+    const newbeeper:Beeper = {
+        status : status
+    }
+    if(status === "deployed"){
+        newbeeper.latitude = data['lat'];
+        newbeeper.longitude = data['lon']
+    }
+  
+    const beeper = await crud.update(newId, newbeeper);
     if(beeper){
         res.status(StatusCodes.OK).json(beeper);
     }

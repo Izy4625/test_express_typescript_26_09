@@ -1,8 +1,8 @@
 export interface Beeper {
     id?: Number,
-    name: string,
+    name?: string,
     status: status,
-    created_at: Date,
+    created_at?: Date,
     detonated_at?: Date,
     latitude?:Number,
     longitude?: Number

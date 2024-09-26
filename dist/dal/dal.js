@@ -73,16 +73,16 @@ exports.create = create;
 //     }
 //     return user
 // }
-const update = (id, status) => __awaiter(void 0, void 0, void 0, function* () {
+const update = (id, upddatedBeeper) => __awaiter(void 0, void 0, void 0, function* () {
     const beeperExists = yield (0, exports.findOne)(id);
     console.log(beeperExists);
+    console.log(upddatedBeeper);
     if (!beeperExists) {
         return null;
     }
-    if (status) {
-        beeperExists.status = status;
+    if (upddatedBeeper) {
+        beepers[id] = Object.assign(Object.assign({}, beeperExists), upddatedBeeper);
     }
-    beepers[id] = beeperExists;
     console.log(beepers[id]);
     saveUsers();
     return beepers[id];

@@ -85,7 +85,14 @@ const updateStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     console.log(newId);
     console.log(data['status']);
     const status = data['status'];
-    const beeper = yield crud.update(newId, status);
+    const newbeeper = {
+        status: status
+    };
+    if (status === "deployed") {
+        newbeeper.latitude = data['lat'];
+        newbeeper.longitude = data['lon'];
+    }
+    const beeper = yield crud.update(newId, newbeeper);
     if (beeper) {
         res.status(http_status_codes_1.StatusCodes.OK).json(beeper);
     }

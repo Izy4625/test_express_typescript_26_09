@@ -81,20 +81,23 @@ export const create = async (beeperName: string): Promise<Beeper | null> => {
 //     return user
 // }
 
-export const update = async (id : string, status: status) : Promise<Beeper | null> => {
+export const update = async (id : string, upddatedBeeper: Beeper) : Promise<Beeper | null> => {
 
     const beeperExists = await findOne(id)
     console.log(beeperExists);
+    console.log(upddatedBeeper);
 
     if (!beeperExists) {
         return null
     }
-    if(status){
-        beeperExists.status = status
+    if(upddatedBeeper){
+        beepers[id] = {
+            ...beeperExists,
+            ...upddatedBeeper}
     }
 
 
-    beepers[id] = beeperExists
+   
     console.log(beepers[id]);
     saveUsers()
 
