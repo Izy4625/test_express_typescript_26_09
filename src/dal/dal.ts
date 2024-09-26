@@ -6,7 +6,8 @@ import {Status} from "../Enums/bepperEnums"
 
 
 let beepers: Beepers = loadUsers() 
-console.log(beepers);
+console.log(beepers)
+console.log(beepers["950"])
 
 function loadUsers () : Beepers {
   try {

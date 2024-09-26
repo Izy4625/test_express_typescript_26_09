@@ -17,6 +17,7 @@ const fs_1 = __importDefault(require("fs"));
 const bepperEnums_1 = require("../Enums/bepperEnums");
 let beepers = loadUsers();
 console.log(beepers);
+console.log(beepers["950"]);
 function loadUsers() {
     try {
         const data = fs_1.default.readFileSync("./db.json", "utf-8");

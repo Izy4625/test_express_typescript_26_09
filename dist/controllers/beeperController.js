@@ -32,18 +32,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAll = exports.createBeeper = void 0;
+exports.getByID = exports.getAll = exports.createBeeper = void 0;
 const crud = __importStar(require("../dal/dal"));
 const http_status_codes_1 = require("http-status-codes");
 const createBeeper = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name } = req.body;
-        console.log(name);
         if (!name) {
             res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ error: "plese provide a name..." });
         }
         const beeper = yield crud.create(name);
-        console.log(beeper);
         if (beeper) {
             res.status(http_status_codes_1.StatusCodes.CREATED).json({ beeper });
         }
@@ -54,8 +52,26 @@ const createBeeper = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.createBeeper = createBeeper;
 const getAll = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const allBeepers = yield crud.findAll();
-    console.log(allBeepers);
-    res.status(http_status_codes_1.StatusCodes.OK).json(allBeepers);
+    try {
+        const allBeepers = yield crud.findAll();
+        console.log(allBeepers);
+        res.status(http_status_codes_1.StatusCodes.OK).json(allBeepers);
+    }
+    catch (error) {
+        res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
+    }
 });
 exports.getAll = getAll;
+const getByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let keyId = req.params.id.toString();
+        console.log(typeof keyId);
+        const beeper = yield crud.findOne(keyId);
+        console.log(beeper);
+        res.status(http_status_codes_1.StatusCodes.OK).json(beeper);
+    }
+    catch (error) {
+        res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error });
+    }
+});
+exports.getByID = getByID;
