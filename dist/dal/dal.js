@@ -46,7 +46,7 @@ const create = (beeperName) => __awaiter(void 0, void 0, void 0, function* () {
     const beeper = {
         id: id,
         name: beeperName,
-        created_at: date,
+        productionDate: date,
         status: "manufactured"
     };
     console.log(beeper);

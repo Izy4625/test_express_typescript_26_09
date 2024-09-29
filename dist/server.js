@@ -1,5 +1,4 @@
 "use strict";
-// import express, {Application} from "express";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -27,26 +26,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// const app: Application = express();
-// const Port:number | string = 3001
-// app.use(express.json());
-// app.listen(Port,() =>{
-//     console.log("hello you are in the server")
-// });
 const express_1 = __importDefault(require("express"));
 const dotevnv = __importStar(require("dotenv"));
-// import cors from "cors"
+const cors_1 = __importDefault(require("cors"));
 // import helmet from "helmet"
 const beepersRoutes_1 = __importDefault(require("./routes/beepersRoutes"));
 dotevnv.config();
 if (!process.env.PORT) {
     console.log(`No port value specified...`);
 }
-const PORT = parseInt(process.env.PORT, 10) || 4000;
+const PORT = parseInt(process.env.PORT, 10) || 3000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-// app.use(cors())
+app.use((0, cors_1.default)());
 // app.use(helmet())
 app.use('/api', beepersRoutes_1.default);
 // app.use('/', bookRouter)

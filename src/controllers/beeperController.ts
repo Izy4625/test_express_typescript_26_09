@@ -52,22 +52,23 @@ export const getByID = async (req: Request, res: Response) =>{
 }
 export const updateStatus = async (req: Request, res: Response) =>{
     const id = req.params['id']
+    console.log(id);
     const data = req.body;
-    const keyId = id.toString();
-    const newId = keyId.substring(1)
-    console.log(keyId);
-    console.log(newId);
+  
+    console.log(id);
+    console.log(id);
     console.log(data['status']);
     const status = data['status'];
     const newbeeper:Beeper = {
         status : status
     }
     if(status === "deployed"){
-        newbeeper.latitude = data['lat'];
-        newbeeper.longitude = data['lon']
+        newbeeper.lat = data['lat'];
+        newbeeper.lon = data['lon']
     }
+    console.log(newbeeper);
   
-    const beeper = await crud.update(newId, newbeeper);
+    const beeper = await crud.update(id, newbeeper);
     if(beeper){
         res.status(StatusCodes.OK).json(beeper);
     }

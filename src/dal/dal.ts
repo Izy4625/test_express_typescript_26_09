@@ -43,7 +43,7 @@ export const create = async (beeperName: string): Promise<Beeper | null> => {
   const beeper : Beeper = {
     id : id,
    name: beeperName,
-   created_at: date,
+   productionDate: date,
    status: "manufactured"
     
   };

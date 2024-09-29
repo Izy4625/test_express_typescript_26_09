@@ -79,20 +79,18 @@ exports.getByID = getByID;
 const updateStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params['id'];
     const data = req.body;
-    const keyId = id.toString();
-    const newId = keyId.substring(1);
-    console.log(keyId);
-    console.log(newId);
+    console.log(id);
+    console.log(id);
     console.log(data['status']);
     const status = data['status'];
     const newbeeper = {
         status: status
     };
     if (status === "deployed") {
-        newbeeper.latitude = data['lat'];
-        newbeeper.longitude = data['lon'];
+        newbeeper.lat = data['lat'];
+        newbeeper.lon = data['lon'];
     }
-    const beeper = yield crud.update(newId, newbeeper);
+    const beeper = yield crud.update(id, newbeeper);
     if (beeper) {
         res.status(http_status_codes_1.StatusCodes.OK).json(beeper);
     }
